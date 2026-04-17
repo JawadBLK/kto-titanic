@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from enum import Enum
 import pandas as pd
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 # TODO : Importer les dépendances OTEL pour le monitoring
 
 from titanic.api.auth import verify_token
@@ -55,7 +55,7 @@ def health() -> dict:
 
 # TODO : Ajouter les paramètres de la fonction (peut se faire en deux fois avec la sécurisation via oAuth2)
 @app.post("/infer")
-def infer(passenger: Passenger) -> list:
+def infer(passenger: Passenger, token: str = Depends(verify_token("api:read"))) -> list:
 
     df_passenger = pd.DataFrame([passenger.to_dict()])
     df_passenger["Sex"] = pd.Categorical(df_passenger["Sex"], categories=[Sex.FEMALE.value, Sex.MALE.value])
