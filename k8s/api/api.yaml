@@ -16,7 +16,6 @@ spec:
         - name: titanic-api
           image: quay.io/jawadblk/titanic/api:latest
           env:
-            env:
             - name: JAEGER_ENDPOINT
               value: "http://jaeger.jawadblk-dev.svc.cluster.local:4318/v1/traces"
             - name: OAUTH2_DOMAIN
